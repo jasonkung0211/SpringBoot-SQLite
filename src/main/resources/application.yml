@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:test.db
+    username:
+    password:
+  jpa:
+    database-platform: com.jasonkung.sqlite.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
