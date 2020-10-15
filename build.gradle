@@ -29,7 +29,7 @@ dependencies {
 			'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3',
 			'com.squareup.okhttp3:okhttp:4.8.1'
 
-
+	implementation 'com.google.code.gson:gson:2.8.6'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

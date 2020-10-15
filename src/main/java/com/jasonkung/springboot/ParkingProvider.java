@@ -8,8 +8,6 @@ import okhttp3.Response;
 public class ParkingProvider {
 
     public static String get(String url) {
-        String responseBody = "";
-
         Request request = new Request.Builder().url(url).build();
         Response response = null;
         try {
@@ -25,7 +23,7 @@ public class ParkingProvider {
                 response.close();
             }
         }
-        return responseBody;
+        return "";
     }
 
 }

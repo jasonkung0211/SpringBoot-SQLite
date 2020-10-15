@@ -1,5 +1,7 @@
 package com.jasonkung.springboot.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,9 +14,11 @@ public class Parking {
 
     @NotNull
     @Column(columnDefinition = "VARCHAR", length = 100)
+    @SerializedName("停車場")
     private String name;
     @NotNull
     @Column(columnDefinition = "INTEGER default 0")
+    @SerializedName("剩餘車位數")
     private Integer space;
 
     public Integer getSpace() {

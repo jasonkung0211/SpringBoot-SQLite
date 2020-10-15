@@ -1,10 +1,18 @@
 package com.jasonkung.springboot;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jasonkung.springboot.model.Parking;
 import com.jasonkung.springboot.model.ParkingMapper;
+import okhttp3.ResponseBody;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ScheduledTasks {
@@ -15,18 +23,14 @@ public class ScheduledTasks {
         this.parkingMapper = mapper;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 1000)
     public void syncData() {
         String resp = ParkingProvider.get("https://www.tsa.gov.tw/tsa/get_parkjason.aspx");
-        String jsonString = resp.replace("[", "");
-        jsonString = jsonString.replace("]", "");
-        String[] jsonlist = jsonString.split("},");
-
-        for (int i = 0; i < jsonlist.length; i++) {
-            Parking temp = new Parking();
-            temp.setName(jsonlist[i].subSequence(jsonlist[i].indexOf("\"停車場\":")+7, jsonlist[i].indexOf("\",")).toString());
-            temp.setSpace(Integer.valueOf(jsonlist[i].replaceAll("\\D+","")));
-            this.parkingMapper.insert(temp);
+        Type listType = new TypeToken<ArrayList<Parking>>(){}.getType();
+        List<Parking> entity = new Gson().fromJson(resp, listType);
+        for (Parking parking : entity) {
+            //System.out.println(parking.toString());
+            this.parkingMapper.insert(parking);
         }
     }
 
