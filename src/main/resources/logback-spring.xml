@@ -1,0 +1,70 @@
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+    <contextName>logback-test</contextName>
+
+    <property name="logback.dir" value="C:/Users/User/SpringTutorial/tutorial2"/>
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--
+        過濾器設定
+        -->
+        <!--
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        -->
+        <!-- 過濾 ERROR -->
+        <!-- <level>ERROR</level> -->
+        <!-- 遇到ERROR就過濾 -->
+        <!-- <onMatch>DENY</onMatch> -->
+        <!-- 没有匹配到就新增 -->
+        <!-- <onMismatch>ACCEPT</onMismatch> -->
+        <!-- </filter> -->
+        <!--
+          日誌名稱，如果没有File 属性，默認使用FileNamePattern的文件路徑
+            如果同時有<File>和<FileNamePattern>，默認當天日誌是<File>
+        -->
+        <File>info.log</File>
+        <!-- 滾動日誌，按照時間滾動 TimeBasedRollingPolicy -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件路徑,定義日誌一天產生一筆 相關屬性可以在參閱文件做設定 -->
+            #
+            <FileNamePattern>error.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- 設定保留日誌天數 -->
+            <maxHistory>30</maxHistory>
+            <!-- 設定日誌的容量上限,超過則會清除 -->
+            <!-- <totalSizeCap>1GB</totalSizeCap> -->
+        </rollingPolicy>
+        <!-- 日誌輸出的編碼方式 ,中文就使用UTF8 -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+
+    </appender>
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--
+        過濾器，默認為 info 级别的，ThresholdFilter
+        -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>Error</level>
+        </filter>
+        <!--日誌名稱-->
+        <File>${logback.logdir}/error.${logback.appname}.log</File>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <FileNamePattern>
+                ${logback.logdir}/error.${logback.appname}.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+
+            <maxHistory>90</maxHistory>
+
+        </rollingPolicy>
+        <!-- 日誌輸出編碼 -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+</configuration>

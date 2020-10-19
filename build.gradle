@@ -21,18 +21,18 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-web',
+			'org.springframework.boot:spring-boot-starter-logging',
 			'org.springframework.boot:spring-boot-starter-data-jpa',
 			'org.xerial:sqlite-jdbc:3.8.11.2',
 			'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3',
-			'com.squareup.okhttp3:okhttp:4.8.1'
-
-	implementation 'com.google.code.gson:gson:2.8.6'
+			'com.squareup.okhttp3:okhttp:4.8.1',
+			'com.google.code.gson:gson:2.8.6'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 }
